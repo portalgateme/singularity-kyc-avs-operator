@@ -1,0 +1,69 @@
+# EigenLayer AVS Operator
+
+This document provides instructions on how to run the EigenLayer AVS operator.
+
+## Setup
+
+1.  **Copy the Environment File:**
+    Duplicate the example environment file and rename it to `.env`.
+
+    ```bash
+    cp .env.example .env
+    ```
+
+2.  **Configure Environment Variables:**
+    Open the `.env` file and configure the necessary environment variables. Refer to the table below for an explanation of each variable.
+
+    | Variable                   | Description                                                        | Default/Example Value          |
+    | :------------------------- | :----------------------------------------------------------------- | :----------------------------- |
+    | `NODE_ENV`                 | The environment for the Node.js application.                       | `production`                   |
+    | `LOG_LEVEL`                | The logging level for the application.                             | `debug`                        |
+    | `REDIS_HOST`               | The hostname or IP address of the Redis server.                    | `redis`                        |
+    | `REDIS_PORT`               | The port number for the Redis server.                              | `6379`                         |
+    | `OPERATOR_PRIVATE_KEY`     | The private key for the operator.                                  |                                |
+    | `CHAIN_IDS`                | Comma-separated list of chain IDs the operator will interact with. | `42161,1,8453`                 |
+    | `CHAIN_RPC_1`              | RPC endpoint for Chain ID 1 (Ethereum Mainnet).                    | `https://eth.llamarpc.com`     |
+    | `CHAIN_RPC_42161`          | RPC endpoint for Chain ID 42161 (Arbitrum One).                    | `https://arb1.arbitrum.io/rpc` |
+    | `CHAIN_RPC_8453`           | RPC endpoint for Chain ID 8453 (Base).                             | `https://base.llamarpc.com`    |
+    | `AVS_CONTRACT_CHAIN_ID`    | The chain ID where the AVS contract is deployed.                   | `1`                            |
+    | `AVS_CONTRACT_ADDRESS`     | The address of the AVS contract. **(You need to fill this value)** |                                |
+    | `EVENTS_FROM_BLOCK_NUMBER` | The block number from which to start processing events.            | `1`                            |
+
+## Running the Operator
+
+You can run the operator using Docker with one of the following options:
+
+### Option 1: Using an External Redis Instance
+
+1.  **Ensure your external Redis instance is running and accessible.**
+
+2.  **Configure `.env`:**
+    Make sure your `.env` file has the correct `REDIS_HOST` and `REDIS_PORT` pointing to your external Redis instance. For example:
+
+    ```env
+    REDIS_HOST=your-external-redis-host
+    REDIS_PORT=6379
+    ```
+
+3.  **Build the Docker image (if you haven't already):**
+    From the root of the project, run:
+
+    ```bash
+    docker build -t avs-operator -f docker/Dockerfile .
+    ```
+
+4.  **Run the operator container:**
+    ```bash
+    docker run --env-file .env --name avs-operator -d avs-operator
+    ```
+    This command runs the `avs-operator` image in detached mode (`-d`), names the container `avs-operator`, and passes all environment variables from your `.env` file.
+
+### Option 2: Running Redis Locally with Docker Compose
+
+To run the operator with a Redis instance managed by Docker Compose, use the following command from the root of the project:
+
+```bash
+docker-compose -f docker/docker-compose.yml up --build -d
+```
+
+This will build the operator image if it doesn't exist and start both the operator and Redis services in detached mode.
