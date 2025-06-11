@@ -4,9 +4,6 @@ import { Task } from "../blockchain/avs";
 
 const config = loadConfig();
 
-const taskQueue = new Queue<Task<string>>(
-  "taskQueue",
-  `redis://${config.REDIS_HOST}:${config.REDIS_PORT}`
-);
+const taskQueue = new Queue<Task<string>>("taskQueue", config.REDIS_URL);
 
 export default taskQueue;

@@ -1,4 +1,4 @@
-import { mainnet, base, arbitrum, hardhat } from "viem/chains";
+import { mainnet, base, arbitrum } from "viem/chains";
 
 export const accessPortalDeployments: {
   [chainId: number]: `0x${string}`;

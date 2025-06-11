@@ -6,11 +6,7 @@ import kycAvsAbi from "./abis/kycAvs.abi";
 import { getWalletClient } from "./client";
 import { getLogger } from "../logger";
 import { addToQueue } from "../queue/handle";
-import {
-  generateRegistrationSignature,
-  generateTaskResponseSignature,
-} from "./utils/signatures";
-import { isWalletCompliant } from "./kyc/checker";
+import { generateTaskResponseSignature } from "./utils/signatures";
 
 const logger = getLogger("AVS");
 const config = loadConfig();
@@ -136,10 +132,8 @@ export async function listenToAvsTasks() {
     address: avsConfig.contractAddress as `0x${string}`,
     onLogs: (logs) => {
       const tasks = logs.map((log) => {
-        return (log as any).args as {
-          taskId: bigint;
-          userAddress: `0x${string}`;
-        };
+        return (log as { args: { taskId: bigint; userAddress: `0x${string}` } })
+          .args;
       });
 
       tasks.forEach((task) => {
@@ -169,7 +163,8 @@ export async function submitTaskAnswer(taskId: bigint, data: TaskAnswer) {
 
   try {
     const operatorAddress = client.account.address;
-    const signatureData = await generateTaskResponseSignature(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _signatureData = await generateTaskResponseSignature(
       taskId,
       data.isKyc,
       operatorAddress,

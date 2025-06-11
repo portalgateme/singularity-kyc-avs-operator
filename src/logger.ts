@@ -17,7 +17,7 @@ const loggerOptions: winston.LoggerOptions = {
         winston.format.printf(
           ({ level, message, timestamp, service, context, stack, ...meta }) => {
             let log = `${timestamp} [${service}${
-              context ? "/" + context : ""
+              context ? `/${  context}` : ""
             }] ${level}: ${message}`;
             const metaString = JSON.stringify(meta, null, 2);
             if (metaString !== "{}") {

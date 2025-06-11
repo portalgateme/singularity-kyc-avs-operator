@@ -14,20 +14,19 @@ This document provides instructions on how to run the EigenLayer AVS operator.
 2.  **Configure Environment Variables:**
     Open the `.env` file and configure the necessary environment variables. Refer to the table below for an explanation of each variable.
 
-    | Variable                   | Description                                                        | Default/Example Value          |
-    | :------------------------- | :----------------------------------------------------------------- | :----------------------------- |
-    | `NODE_ENV`                 | The environment for the Node.js application.                       | `production`                   |
-    | `LOG_LEVEL`                | The logging level for the application.                             | `debug`                        |
-    | `REDIS_HOST`               | The hostname or IP address of the Redis server.                    | `redis`                        |
-    | `REDIS_PORT`               | The port number for the Redis server.                              | `6379`                         |
-    | `OPERATOR_PRIVATE_KEY`     | The private key for the operator.                                  |                                |
-    | `CHAIN_IDS`                | Comma-separated list of chain IDs the operator will interact with. | `42161,1,8453`                 |
-    | `CHAIN_RPC_1`              | RPC endpoint for Chain ID 1 (Ethereum Mainnet).                    | `https://eth.llamarpc.com`     |
-    | `CHAIN_RPC_42161`          | RPC endpoint for Chain ID 42161 (Arbitrum One).                    | `https://arb1.arbitrum.io/rpc` |
-    | `CHAIN_RPC_8453`           | RPC endpoint for Chain ID 8453 (Base).                             | `https://base.llamarpc.com`    |
-    | `AVS_CONTRACT_CHAIN_ID`    | The chain ID where the AVS contract is deployed.                   | `1`                            |
-    | `AVS_CONTRACT_ADDRESS`     | The address of the AVS contract. **(You need to fill this value)** |                                |
-    | `EVENTS_FROM_BLOCK_NUMBER` | The block number from which to start processing events.            | `1`                            |
+    | Variable                   | Description                                                                                                                                                                                                                                                                                    | Default/Example Value          |
+    | :------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------- |
+    | `NODE_ENV`                 | The environment for the Node.js application.                                                                                                                                                                                                                                                   | `production`                   |
+    | `LOG_LEVEL`                | The logging level for the application.                                                                                                                                                                                                                                                         | `debug`                        |
+    | `REDIS_URL`                | Redis connection string. Supports standard Redis, clusters, TLS, and authentication. Examples:<br/>- Standard: `redis://localhost:6379`<br/>- With auth: `redis://user:password@localhost:6379`<br/>- TLS: `rediss://localhost:6380`<br/>- Cluster: `redis://node1:6379,node2:6379,node3:6379` | `redis://redis:6379`           |
+    | `OPERATOR_PRIVATE_KEY`     | The private key for the operator.                                                                                                                                                                                                                                                              |                                |
+    | `CHAIN_IDS`                | Comma-separated list of chain IDs the operator will interact with.                                                                                                                                                                                                                             | `42161,1,8453`                 |
+    | `CHAIN_RPC_1`              | RPC endpoint for Chain ID 1 (Ethereum Mainnet).                                                                                                                                                                                                                                                | `https://eth.llamarpc.com`     |
+    | `CHAIN_RPC_42161`          | RPC endpoint for Chain ID 42161 (Arbitrum One).                                                                                                                                                                                                                                                | `https://arb1.arbitrum.io/rpc` |
+    | `CHAIN_RPC_8453`           | RPC endpoint for Chain ID 8453 (Base).                                                                                                                                                                                                                                                         | `https://base.llamarpc.com`    |
+    | `AVS_CONTRACT_CHAIN_ID`    | The chain ID where the AVS contract is deployed.                                                                                                                                                                                                                                               | `1`                            |
+    | `AVS_CONTRACT_ADDRESS`     | The address of the AVS contract. **(You need to fill this value)**                                                                                                                                                                                                                             |                                |
+    | `EVENTS_FROM_BLOCK_NUMBER` | The block number from which to start processing events.                                                                                                                                                                                                                                        | `1`                            |
 
 ## Running the Operator
 
@@ -38,12 +37,17 @@ You can run the operator using Docker with one of the following options:
 1.  **Ensure your external Redis instance is running and accessible.**
 
 2.  **Configure `.env`:**
-    Make sure your `.env` file has the correct `REDIS_HOST` and `REDIS_PORT` pointing to your external Redis instance. For example:
+    Make sure your `.env` file has the correct `REDIS_URL` pointing to your external Redis instance. For example:
 
     ```env
-    REDIS_HOST=your-external-redis-host
-    REDIS_PORT=6379
+    REDIS_URL=redis://your-external-redis-host:6379
     ```
+
+    You can also use more advanced connection strings:
+
+    - With authentication: `REDIS_URL=redis://username:password@your-redis-host:6379`
+    - With TLS: `REDIS_URL=rediss://your-redis-host:6380`
+    - For Redis Cluster: `REDIS_URL=redis://node1:6379,node2:6379,node3:6379`
 
 3.  **Build the Docker image (if you haven't already):**
     From the root of the project, run:

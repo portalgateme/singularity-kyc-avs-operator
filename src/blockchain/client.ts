@@ -4,7 +4,7 @@ import { http, createWalletClient } from "viem";
 import { loadConfig, isChainEnabled, Config } from "../config";
 import { getChain } from "./utils";
 
-let clients: Record<
+const clients: Record<
   number,
   ReturnType<typeof createWalletClientFromPrivateKey>
 > = {};

@@ -35,8 +35,7 @@ const baseConfigSchema = z.object({
     ])
     .optional(),
 
-  REDIS_HOST: z.string(),
-  REDIS_PORT: z.string().transform((val) => Number(val)),
+  REDIS_URL: z.string().min(1, "REDIS_URL is required"),
 });
 
 const configSchema = baseConfigSchema.superRefine((data, ctx) => {

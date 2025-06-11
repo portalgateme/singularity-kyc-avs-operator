@@ -3,3 +3,10 @@
 node_modules
 yarn.lock
 docker
+dist
+logs/*
+.eslintrc.js
+.gitignore
+.prettierrc.js
+.prettierignore
+.prettierignore
