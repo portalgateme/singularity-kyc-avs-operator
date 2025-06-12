@@ -50,13 +50,19 @@ You can run the operator using Docker with one of the following options:
     - For Redis Cluster: `REDIS_URL=redis://node1:6379,node2:6379,node3:6379`
 
 3.  **Build the Docker image (if you haven't already):**
+    
     From the root of the project, run:
 
     ```bash
     docker build -t avs-operator -f docker/Dockerfile .
     ```
 
-4.  **Run the operator container:**
+    Alternativly you can download the docker img from docker hub
+    ```bash
+    docker pull singularitynetwork/singularity-kyc-avs-operator
+    ```
+    
+5.  **Run the operator container:**
     ```bash
     docker run --env-file .env --name avs-operator -d avs-operator
     ```
@@ -71,3 +77,10 @@ docker-compose -f docker/docker-compose.yml up --build -d
 ```
 
 This will build the operator image if it doesn't exist and start both the operator and Redis services in detached mode.
+
+## Contracts infomation 
+- ECDSAStakeRegistry Proxy: 0xD4b2352eE460593Cc0D2FA96C0c965B2Ee39e9Eb
+- ECDSAStakeRegistry Implementation: 0x34d8a70E198F3830cF5aA9306c7d038A4e488E26
+- KycAVS Proxy: 0x128e65461Ee2D794fc7F1A8c732dd9A275A8618c
+- KycAVS Implementation: 0x6a0A2288a4E1F66F86c687aCE2d9248EC7e9056D
+- Network: mainnet
