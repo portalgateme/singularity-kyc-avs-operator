@@ -1,8 +1,13 @@
 services:
   operator:
+    # Option 1: Use the public Docker image (recommended for most users)
+    # image: singularitynetwork/singularity-kyc-avs-operator:latest
+
+    # Option 2: Build from source (for development or customization)
     build:
       context: ../
       dockerfile: docker/Dockerfile
+
     env_file:
       - ../.env
 
