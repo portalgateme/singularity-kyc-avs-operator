@@ -79,6 +79,7 @@ docker-compose -f docker/docker-compose.yml up --build -d
 This will build the operator image if it doesn't exist and start both the operator and Redis services in detached mode.
 
 ## Contracts infomation 
+- AVS contract(allocation manager): 0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39
 - ECDSAStakeRegistry Proxy: 0xD4b2352eE460593Cc0D2FA96C0c965B2Ee39e9Eb
 - ECDSAStakeRegistry Implementation: 0x34d8a70E198F3830cF5aA9306c7d038A4e488E26
 - KycAVS Proxy: 0x128e65461Ee2D794fc7F1A8c732dd9A275A8618c
